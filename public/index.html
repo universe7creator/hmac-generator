@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HMAC Generator Pro - Secure Message Authentication</title>
+  <meta name="description" content="Generate HMAC signatures with SHA-256, SHA-512, MD5. Verify API webhooks, create secure message authentication codes.">
+  <meta property="og:title" content="HMAC Generator Pro">
+  <meta property="og:description" content="Generate secure HMAC signatures for API authentication">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .gradient-text {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glow {
+      box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+    .animate-delay-1 { animation-delay: 0.1s; }
+    .animate-delay-2 { animation-delay: 0.2s; }
+    .animate-delay-3 { animation-delay: 0.3s; }
+    .input-dark {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+    .input-dark:focus {
+      border-color: #3b82f6;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
+    }
+    .result-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen">
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 glass border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <span class="font-bold text-xl">HMAC Generator Pro</span>
+        </div>
+        <a href="#pricing" class="btn-primary px-6 py-2 rounded-full font-medium text-sm">Get Access — $9</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-32 pb-20 px-4">
+    <div class="max-w-5xl mx-auto text-center">
+      <div class="animate-fade-in">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
+          🔐 Secure & Instant
+        </span>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          Generate <span class="gradient-text">HMAC Signatures</span><br>in Seconds
+        </h1>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10">
+          Create secure HMAC signatures with SHA-256, SHA-512, and MD5.
+          Perfect for API authentication, webhook verification, and data integrity.
+        </p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 animate-fade-in animate-delay-1">
+        <a href="#demo" class="btn-primary px-8 py-4 rounded-full font-semibold text-lg inline-flex items-center gap-2">
+          Try Demo Free
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+        <a href="#features" class="px-8 py-4 rounded-full font-semibold text-lg border border-white/20 hover:border-white/40 transition-colors">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Section -->
+  <section id="demo" class="py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Try It Now</h2>
+        <p class="text-gray-400">Generate HMAC signatures instantly. No signup required for demo.</p>
+      </div>
+      <div class="glass rounded-2xl p-6 md:p-8 glow">
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Message / Payload</label>
+            <textarea id="message" rows="4" class="input-dark w-full rounded-xl p-4 font-mono text-sm" placeholder="Enter your message here..."></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Secret Key</label>
+            <textarea id="secret" rows="4" class="input-dark w-full rounded-xl p-4 font-mono text-sm" placeholder="Enter your secret key..."></textarea>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-4 mb-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Algorithm</label>
+            <select id="algorithm" class="input-dark rounded-xl px-4 py-3">
+              <option value="sha256">SHA-256</option>
+              <option value="sha512">SHA-512</option>
+              <option value="sha1">SHA-1</option>
+              <option value="md5">MD5</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Output Encoding</label>
+            <select id="encoding" class="input-dark rounded-xl px-4 py-3">
+              <option value="hex">Hexadecimal</option>
+              <option value="base64">Base64</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button onclick="generateHMAC()" class="btn-primary px-8 py-3 rounded-xl font-semibold">
+              Generate HMAC
+            </button>
+          </div>
+        </div>
+        <div id="result" class="hidden result-box rounded-xl p-4">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-gray-400">Generated Signature:</span>
+            <button onclick="copyResult()" class="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              Copy
+            </button>
+          </div>
+          <code id="resultValue" class="font-mono text-green-400 break-all text-sm block"></code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-20 px-4 bg-white/5">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Everything You Need</h2>
+        <p class="text-gray-400">Professional-grade HMAC generation for developers</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass rounded-2xl p-6 hover:border-blue-500/30 transition-colors">
+          <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Multiple Algorithms</h3>
+          <p class="text-gray-400 text-sm">Support for SHA-256, SHA-512, SHA-1, and MD5 algorithms.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 hover:border-purple-500/30 transition-colors">
+          <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">API Access</h3>
+          <p class="text-gray-400 text-sm">Generate HMAC signatures programmatically via REST API.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 hover:border-pink-500/30 transition-colors">
+          <div class="w-12 h-12 bg-pink-500/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Client-Side Security</h3>
+          <p class="text-gray-400 text-sm">Your secrets never leave the browser. Fully secure.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 hover:border-green-500/30 transition-colors">
+          <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Encoding Options</h3>
+          <p class="text-gray-400 text-sm">Output in Hexadecimal or Base64 encoding formats.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 hover:border-yellow-500/30 transition-colors">
+          <div class="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Instant Results</h3>
+          <p class="text-gray-400 text-sm">Generate signatures instantly with no server delay.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 hover:border-cyan-500/30 transition-colors">
+          <div class="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Developer Friendly</h3>
+          <p class="text-gray-400 text-sm">Clean API with comprehensive documentation and examples.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Simple Pricing</h2>
+        <p class="text-gray-400">One-time payment. Lifetime access.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 max-w-md mx-auto glow border-2 border-blue-500/30">
+        <div class="text-center mb-6">
+          <h3 class="text-xl font-semibold mb-2">Pro License</h3>
+          <div class="text-4xl font-bold gradient-text mb-2">$9</div>
+          <p class="text-gray-400 text-sm">One-time payment</p>
+        </div>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center gap-3 text-sm">
+            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            Unlimited HMAC generations
+          </li>
+          <li class="flex items-center gap-3 text-sm">
+            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            API access included
+          </li>
+          <li class="flex items-center gap-3 text-sm">
+            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            All algorithms supported
+          </li>
+          <li class="flex items-center gap-3 text-sm">
+            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            Lifetime updates
+          </li>
+          <li class="flex items-center gap-3 text-sm">
+            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            Priority support
+          </li>
+        </ul>
+        <button id="buyBtn" class="btn-primary w-full py-4 rounded-xl font-semibold text-lg">
+          Get Access — $9
+        </button>
+        <p class="text-center text-xs text-gray-500 mt-4">Secure payment via LemonSqueezy</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-20 px-4 bg-white/5">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        <div class="glass rounded-xl p-6">
+          <h3 class="font-semibold mb-2">What is HMAC used for?</h3>
+          <p class="text-gray-400 text-sm">HMAC (Hash-based Message Authentication Code) is used to verify both the integrity and authenticity of a message. Common use cases include API request signing, webhook verification, and data integrity checks.</p>
+        </div>
+        <div class="glass rounded-xl p-6">
+          <h3 class="font-semibold mb-2">Is my secret key secure?</h3>
+          <p class="text-gray-400 text-sm">Yes! All HMAC generation happens client-side in your browser. Your secret keys are never sent to our servers or stored anywhere.</p>
+        </div>
+        <div class="glass rounded-xl p-6">
+          <h3 class="font-semibold mb-2">Which algorithms are supported?</h3>
+          <p class="text-gray-400 text-sm">We support SHA-256, SHA-512, SHA-1, and MD5. SHA-256 is recommended for most security-critical applications.</p>
+        </div>
+        <div class="glass rounded-xl p-6">
+          <h3 class="font-semibold mb-2">Do you offer an API?</h3>
+          <p class="text-gray-400 text-sm">Yes! Pro users get access to our REST API for programmatic HMAC generation. Perfect for backend integration.</p>
+        </div>
+        <div class="glass rounded-xl p-6">
+          <h3 class="font-semibold mb-2">What is the refund policy?</h3>
+          <p class="text-gray-400 text-sm">We offer a 14-day money-back guarantee. If you're not satisfied, contact us for a full refund.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 border-t border-white/5">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded flex items-center justify-center">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+        </div>
+        <span class="font-semibold">HMAC Generator Pro</span>
+      </div>
+      <p class="text-gray-500 text-sm">© 2024 All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Client-side HMAC generation using Web Crypto API
+    async function generateHMAC() {
+      const message = document.getElementById('message').value;
+      const secret = document.getElementById('secret').value;
+      const algorithm = document.getElementById('algorithm').value;
+      const encoding = document.getElementById('encoding').value;
+
+      if (!message || !secret) {
+        alert('Please enter both message and secret key');
+        return;
+      }
+
+      try {
+        const encoder = new TextEncoder();
+        const keyData = encoder.encode(secret);
+        const messageData = encoder.encode(message);
+
+        const cryptoKey = await crypto.subtle.importKey(
+          'raw',
+          keyData,
+          { name: 'HMAC', hash: algorithm === 'md5' ? 'SHA-256' : algorithm },
+          false,
+          ['sign']
+        );
+
+        const signature = await crypto.subtle.sign('HMAC', cryptoKey, messageData);
+        const hashArray = Array.from(new Uint8Array(signature));
+
+        let result;
+        if (encoding === 'hex') {
+          result = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        } else {
+          result = btoa(String.fromCharCode(...hashArray));
+        }
+
+        document.getElementById('resultValue').textContent = result;
+        document.getElementById('result').classList.remove('hidden');
+      } catch (error) {
+        console.error('Error:', error);
+        // Fallback: use API endpoint
+        generateHMACviaAPI(message, secret, algorithm, encoding);
+      }
+    }
+
+    async function generateHMACviaAPI(message, secret, algorithm, encoding) {
+      try {
+        const response = await fetch('/api/process', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, secret, algorithm, encoding })
+        });
+        const data = await response.json();
+        if (data.hmac) {
+          document.getElementById('resultValue').textContent = data.hmac;
+          document.getElementById('result').classList.remove('hidden');
+        }
+      } catch (error) {
+        alert('Error generating HMAC: ' + error.message);
+      }
+    }
+
+    function copyResult() {
+      const result = document.getElementById('resultValue').textContent;
+      navigator.clipboard.writeText(result).then(() => {
+        alert('Copied to clipboard!');
+      });
+    }
+
+    // Checkout button
+    document.getElementById('buyBtn').addEventListener('click', () => {
+      const CHECKOUT_URL = window.__CHECKOUT_URL || null;
+      if (CHECKOUT_URL) {
+        window.open(CHECKOUT_URL, '_blank');
+      } else {
+        alert('Coming soon! Contact support for early access.');
+      }
+    });
+  </script>
+</body>
+</html>

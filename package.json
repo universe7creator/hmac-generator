@@ -1,0 +1,14 @@
+{
+  "name": "hmac-generator",
+  "version": "1.0.0",
+  "description": "Generate secure HMAC signatures with SHA256, SHA512, and more. Verify API webhooks, create secure message authentication codes for your applications.",
+  "main": "api/process.js",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "vercel-build": "echo 'Build complete'"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

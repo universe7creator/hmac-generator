@@ -1,0 +1,17 @@
+{
+  "name": "HMAC Generator Pro",
+  "slug": "hmac-generator",
+  "tagline": "Generate secure HMAC signatures with SHA256, SHA512, and more. Verify API webhooks, create secure message authentication codes for your applications.",
+  "description": "Generate secure HMAC signatures with SHA256, SHA512, and more. Verify API webhooks, create secure message authentication codes for your applications.",
+  "price": "9",
+  "features": [],
+  "tech_stack": "Vercel + Node.js",
+  "status": "building",
+  "vercel_url": null,
+  "github_url": null,
+  "lemonsqueezy_checkout_url": null,
+  "lemonsqueezy_product_id": null,
+  "webhook_url": null,
+  "created_cycle": null,
+  "deployed_cycle": null
+}
